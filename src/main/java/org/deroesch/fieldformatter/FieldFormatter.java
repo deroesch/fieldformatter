@@ -6,15 +6,16 @@ import java.util.TreeSet;
 import lombok.NonNull;
 
 /**
- * Simple string validators for date, phone, soc sec number.
+ * Simple string field formatter for date, phone, social security number
  *
  */
 public class FieldFormatter {
 
     /**
+     * Formats a candidate string of digits as a date
      * 
-     * @param candidate
-     * @return
+     * @param candidate The candidate string
+     * @return The formatted date
      */
     public String asDate(@NonNull final String candidate) {
         final String digits = filterDigits(candidate);
@@ -22,9 +23,10 @@ public class FieldFormatter {
     }
 
     /**
+     * Formats a candidate string of digits as a social security number
      * 
-     * @param candidate
-     * @return
+     * @param candidate The candidate string
+     * @return The formatted social security number
      */
     public String asSSN(@NonNull final String candidate) {
         final String digits = filterDigits(candidate);
@@ -32,9 +34,10 @@ public class FieldFormatter {
     }
 
     /**
+     * Formats a candidate string of digits as a US phone number
      * 
-     * @param candidate
-     * @return
+     * @param candidate The candidate string
+     * @return The formatted US phone number
      */
     public String asPhone(@NonNull final String candidate) {
         final String digits = filterDigits(candidate);
@@ -42,9 +45,10 @@ public class FieldFormatter {
     }
 
     /**
+     * Strips non-digits out of candidate string
      * 
-     * @param candidate
-     * @return
+     * @param candidate The string to filter
+     * @return The filtered string
      */
     @NonNull
     String filterDigits(@NonNull final String candidate) {
@@ -60,12 +64,14 @@ public class FieldFormatter {
     }
 
     /**
+     * Formats input string by stripping out non-digits, then inserts delimiter
+     * chars at locations.
      * 
-     * @param candidate
-     * @param length
-     * @param locations
-     * @param delimChar
-     * @return
+     * @param candidate The unformatted string
+     * @param length    Mandatory length of candidate string
+     * @param locations Set of integers where delimiters should appear in the output
+     * @param delimChar Delimiter to insert at locations
+     * @return The formatted string
      */
     @NonNull
     String format(@NonNull final String candidate, final int length, @NonNull final Set<Integer> locations,
@@ -86,7 +92,7 @@ public class FieldFormatter {
         return formattingBuffer.toString();
     }
 
-    // For dates
+    // For dates of the form XX/XX/XXXX
     private final int dateLimit = 8;
     private final String dateDelim = "/";
     private final Set<Integer> dateChars = new TreeSet<>();
@@ -95,7 +101,7 @@ public class FieldFormatter {
         dateChars.add(3);
     }
 
-    // For social security numbers
+    // For social security numbers of the form XXX-XX-XXXX
     private final int ssnLimit = 9;
     private final String ssnDelim = "-";
     private final Set<Integer> ssnChars = new TreeSet<>();
@@ -104,7 +110,7 @@ public class FieldFormatter {
         ssnChars.add(4);
     }
 
-    // For phone numbers
+    // For US phone numbers of the form XXX-XXX-XXXX
     private final int phoneLimit = 10;
     private final String phoneDelim = "-";
     private final Set<Integer> phoneChars = new TreeSet<>();
