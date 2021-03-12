@@ -13,7 +13,7 @@ public class FieldFormatter {
 
     /**
      * Formats a candidate string of digits as a date
-     * 
+     *
      * @param candidate The candidate string
      * @return The formatted date
      */
@@ -24,7 +24,7 @@ public class FieldFormatter {
 
     /**
      * Formats a candidate string of digits as a social security number
-     * 
+     *
      * @param candidate The candidate string
      * @return The formatted social security number
      */
@@ -35,7 +35,7 @@ public class FieldFormatter {
 
     /**
      * Formats a candidate string of digits as a US phone number
-     * 
+     *
      * @param candidate The candidate string
      * @return The formatted US phone number
      */
@@ -46,7 +46,7 @@ public class FieldFormatter {
 
     /**
      * Strips non-digits out of candidate string
-     * 
+     *
      * @param candidate The string to filter
      * @return The filtered string
      */
@@ -64,28 +64,29 @@ public class FieldFormatter {
     }
 
     /**
-     * Formats input string by stripping out non-digits, then inserts delimiter
+     * Formats input string by stripping out non-digits, then inserting delimiter
      * chars at locations.
-     * 
-     * @param candidate The unformatted string
-     * @param length    Mandatory length of candidate string
-     * @param locations Set of integers where delimiters should appear in the output
-     * @param delimChar Delimiter to insert at locations
+     *
+     * @param candidate      The unformatted string
+     * @param requiredLength Mandatory length of candidate string
+     * @param delimLocations Set of integers where delimiters should appear in the
+     *                       output
+     * @param delimChar      Delimiter to insert at locations
      * @return The formatted string
      */
     @NonNull
-    String format(@NonNull final String candidate, final int length, @NonNull final Set<Integer> locations,
+    String format(@NonNull final String candidate, final int requiredLength, @NonNull final Set<Integer> delimLocations,
             @NonNull final String delimChar) {
 
         // Exit immediately if length is wrong.
-        if (length < 0 || candidate.length() != length)
+        if (requiredLength < 0 || candidate.length() != requiredLength)
             return "";
 
         // Rewrite string, adding delimiters
         final StringBuffer formattingBuffer = new StringBuffer();
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < requiredLength; i++) {
             formattingBuffer.append(candidate.charAt(i));
-            if (locations.contains(i))
+            if (delimLocations.contains(i))
                 formattingBuffer.append(delimChar);
         }
 
